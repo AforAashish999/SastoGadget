@@ -1,0 +1,126 @@
+// Link
+
+// Basic way to move between pages in React Router.
+
+// It changes the URL without reloading the page.
+
+// Use when you just want navigation, no styling for active links.
+
+// <Link to="/about">About</Link>
+
+// 🔹 NavLink
+
+// Works like Link, but adds an active class (or lets you style differently) when the route is active.
+
+// Perfect for menus or navigation bars.
+
+// <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""}>
+//   About
+// </NavLink>
+
+
+// If you have a navbar → use NavLink.
+
+// 🔹 navigate (from useNavigate)
+
+// A hook, not a component.
+
+// Use it when you want to redirect programmatically (e.g., after login, logout, or a button click).
+
+// import { useNavigate } from "react-router-dom";
+
+// function Login() {
+//   const navigate = useNavigate();
+
+//   function handleLogin() {
+//     // do login stuff...
+//     navigate("/dashboard");
+//   }
+
+//   return <button onClick={handleLogin}>Login</button>;
+// }
+
+
+// ✅ Best choice depends on the case:
+
+// Navbar / menus → NavLink
+
+// Simple links inside content → Link
+
+// After some logic (login, form submit, button click, etc.) → navigate
+
+// //****************************************************************
+// // import React from "react";
+// // import { Link } from "react-router"; 
+
+// // const navItems = ["IncrementPage", "DecrementPage", "IncAmount"];
+
+// // export default function Headers() {
+// //   return (
+// //     <div className=" bg-gray-800 text-white p-4 flex justify-center gap-6">
+// //       {navItems.map((item, index) => (
+// //         <Link
+// //           to={`/${item.toLowerCase()}`}
+// //           key={index}
+// //           className="hover:text-yellow-400 hover:underline"
+// //         >
+// //         {item}
+// //         </Link>
+// //       ))}
+// //     </div>
+// //   );
+// // }
+
+// // import { Outlet, NavLink } from "react-router";
+
+// // export default function Layout() {
+// //   return (
+// //     <div>
+// //       <header>
+// //         <nav>
+// //           <ul>
+// //             <li>
+// //               <NavLink to="/" end activeClassName="active-link">
+// //                 Home
+// //               </NavLink>
+// //             </li>
+// //             <li>
+// //               <NavLink to="/dashboard" activeClassName="active-link">
+// //                 Dashboard
+// //               </NavLink>
+// //             </li>
+// //           </ul>
+// //         </nav>
+// //       </header>
+// //       <hr />
+// //       <Outlet />
+// //     </div>
+// //   );
+// // }
+
+
+
+// import React from 'react'
+// import { Outlet, NavLink } from 'react-router'
+
+// const navItems = ["logo", "search", "logIn", "cart"];
+
+// export default function MainLayout() {
+//   return (
+//    <>
+//    <div>
+//     {
+//         navItems.map((item,index)=>(
+//             <NavLink to={ `/${item.toLowerCase()}` } 
+//             key={index}
+//             className={({isActive})=> isActive? 'text-yellow-400 underline' : 'hover:text-yellow-400 hover:underline'}
+//             > 
+//             {item}
+//             </NavLink>
+//         ))
+//     }
+//    </div>
+   
+//    </>
+//   )
+// }

@@ -1,0 +1,13 @@
+Perfect, mate 👌 — you’re already super close. You basically want that right-side arrow button (→) to switch the image shown inside your hero section, like a mini slider or carousel.
+
+Let’s walk through the logic + code setup for that, step by step.
+
+🧠 Step 1 — The Core Idea
+
+We’ll use:
+
+A React useState hook to track the current image index.
+
+A nextImage function that updates the index when the right arrow is clicked.
+
+The <img> tag will change its src based on that index.

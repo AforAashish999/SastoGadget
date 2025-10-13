@@ -1,0 +1,27 @@
+🔹 Don’t put everything inside a string array
+
+Right now you have:
+
+const navItems = ["logo", "search", "logIn", "cart"];
+
+
+That works for simple text, but once items are different components, use an array of objects where each object can store:
+
+type → whether it’s a link, component, or icon
+
+component → actual JSX
+
+to → link path (optional)
+
+****************************************************************************************
+<Route path="/" element={<MainLayout />}>
+  <Route index element={<Home />} />   // This part is your "main section"
+  <Route path="account" element={<Account />} />
+</Route>
+When users open your site (/):
+
+<MainLayout /> loads the Header and Footer
+
+<Home /> fills the <Outlet /> in between
+
+✅ That’s what makes it the “home page.”

@@ -1,0 +1,148 @@
+Perfect 😄 mate — here’s your fully ready, clean Hero1.jsx version using Framer Motion exactly how you described:
+✅ Text lines slide from top one after another
+✅ Button slides up from below
+✅ Animation triggers only once when in view
+✅ Uses TailwindCSS and Framer Motion — no flicker, smooth and clean
+
+Step 1 — What is useAnimation()?
+
+👉 It’s a Framer Motion hook that gives you manual control over animations.
+Normally, we do this:
+
+<motion.div initial="hidden" animate="visible" variants={...}>
+
+
+So Framer Motion controls the animation automatically — first hidden → then visible.
+
+But with useAnimation(), you become the controller.
+
+Example:
+
+const controls = useAnimation(); // 🧠 gives you remote control over animation
+
+<motion.div
+  variants={myVariants}
+  animate={controls} // 👈 Instead of "visible", we now connect our remote control
+/>
+
+
+Now you can say:
+
+controls.start("visible") // run the animation
+controls.start("hidden")  // reverse or hide it again
+
+
+That’s why it’s called “controls” — it’s like holding a remote for the element’s animation state.
+
+⚙️ Step 2 — What happens in your useEffect()
+
+Here’s the code:
+
+useEffect(() => {
+  async function sequence() {
+    while (true) {
+      await controls.start("visible"); // play animation (stagger)
+      await new Promise(res => setTimeout(res, 1000)); // wait
+      controls.set("hidden"); // reset instantly
+    }
+  }
+  sequence();
+}, [controls]);
+
+
+Let’s go through this line by line:
+
+useEffect(() => { ... }, [controls])
+
+This runs once when your component mounts.
+It’s used here to start the infinite animation loop automatically.
+
+async function sequence() { ... }
+
+We define an asynchronous function, because we’ll be using await — meaning:
+
+“Wait for one animation or delay to finish before going to the next step.”
+
+while (true) { ... }
+
+This is an infinite loop, so the animation keeps repeating forever.
+
+await controls.start("visible");
+
+This means:
+
+“Start the animation for all children to go from hidden → visible (stagger included).”
+
+Since we use await, the loop waits until the animation finishes before moving to the next step.
+Framer Motion automatically knows how long to wait (based on transition.duration).
+
+await new Promise(res => setTimeout(res, 1000));
+
+Now we tell JavaScript:
+
+“Wait 1000 milliseconds (1 second) before continuing.”
+
+So after one cycle, we pause for 1 second before restarting.
+
+controls.set("hidden");
+
+This line:
+
+“Instantly reset all elements back to their hidden state.”
+
+⚠️ Note:
+
+.set() is instant, no animation, just immediate state change.
+
+If we used .start("hidden") instead, it would animate back to hidden (which can look weird).
+
+So full logic:
+
+Start visible animation → (play the stagger sequence)
+
+Wait 1 second
+
+Instantly hide everything
+
+Loop again forever
+
+💡 Concept Summary (your exact question)
+
+“Without this code, when animation is visible, it animates; when hidden, it doesn’t. Isn’t that the basic?”
+
+✅ Yes — perfectly said.
+But that basic version happens once (or only when you scroll into view).
+
+If you want it to replay automatically, you need a loop trigger.
+Framer Motion’s built-in repeat doesn’t replay staggered groups, so we handle that with this custom logic.
+
+So what you said is right —
+
+"visible" → it animates (stagger starts)
+
+"hidden" → nothing shows
+
+This code just tells Framer:
+
+“Switch between visible → hidden repeatedly forever.”
+
+🧠 You can visualize it like this
+Step	Action	Description
+1	controls.set("hidden")	All elements invisible and ready to start
+2	controls.start("visible")	Run the whole stagger animation
+3	Wait 1 second	Pause
+4	Back to hidden instantly	Reset
+5	Loop	Do it again forever
+🧩 TL;DR
+
+useAnimation() → gives you control (manual animate trigger)
+
+controls.start("state") → runs animation
+
+controls.set("state") → instantly sets to that variant
+
+await → waits for one step to finish before next
+
+while(true) → repeats forever
+
+This is how you loop stagger animations smoothly since repeat doesn’t handle stagger well.
