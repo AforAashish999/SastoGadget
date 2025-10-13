@@ -1,0 +1,26 @@
+1) Components
+Header/ → your top navigation bar (with logo, search, categories, etc.)
+
+Footer/ → your bottom section of the site
+
+ProductCard.jsx → small UI box that shows a product’s image, name, price (used in Home, CategoryPage, etc.)
+
+CategoryMenu.jsx → the dropdown or hover menu under “Categories” in your header
+
+Think of this folder like LEGO pieces — small parts that combine to form full pages.
+
+2)          pages/ folder → Big, full-page screens
+
+These are your route-level components, meaning each corresponds to a path in your router (like /, /products/1, /cart, etc.)
+
+Home.jsx → main homepage
+
+CategoryPage.jsx → shows all products of a specific category (e.g. /category/Electronics)
+
+ProductDetail.jsx → single product page (like /products/3)
+
+Cart.jsx → user’s shopping cart
+
+RecentlyViewed.jsx → list of products the user has viewed recently
+
+NotFound.jsx → fallback page for wrong routes (404)

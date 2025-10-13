@@ -25,3 +25,5 @@ When users open your site (/):
 <Home /> fills the <Outlet /> in between
 
 ✅ That’s what makes it the “home page.”
+
+
