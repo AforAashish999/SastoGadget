@@ -51,7 +51,7 @@ export default function Hero1({controls}) {
   )
 }
 
-
+ 
 
 // import React from 'react'
 // import { hero2Earbud1, hero2Earbud2, hero2Earbud3 } from '../assets/images'

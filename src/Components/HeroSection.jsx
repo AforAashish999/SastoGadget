@@ -1,194 +1,107 @@
-import React, { useRef, useEffect } from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, EffectFade } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
-import { useAnimation } from "framer-motion";
+// import React, { useState, useEffect } from 'react';
+// import { useAnimation } from 'framer-motion';
+// import Hero1 from './Hero1';
+// import Hero2 from './Hero2';
 
-import Hero1 from './Hero1';
-import Hero2 from './Hero2';
+// export default function HeroSection() {
+//   const [currentSlide, setCurrentSlide] = useState(0);
+//   const controls1 = useAnimation();
+//   const controls2 = useAnimation();
+
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setCurrentSlide(prev => (prev === 0 ? 1 : 0));
+//     }, 10000);
+
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   useEffect(() => {
+//     if (currentSlide === 0) {
+//       controls1.start('visible');
+//       controls2.start('hidden');
+//     } else {
+//       controls1.start('hidden');
+//       controls2.start('visible');
+//     }
+//   }, [currentSlide, controls1, controls2]);
+
+//   return (
+//     <div>
+//       {currentSlide === 0 && <Hero1 controls={controls1} />}
+//       {currentSlide === 1 && <Hero2 controls={controls2} />}
+//     </div>
+//   );
+// }
+
+import React, { useState, useEffect } from "react";
+import { useAnimation } from "framer-motion";
+import Hero1 from "./Hero1";
+import Hero2 from "./Hero2";
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 export default function HeroSection() {
-  const hero1Controls = useAnimation();
-  const hero2Controls = useAnimation();
-  const swiperRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const controls1 = useAnimation();
+  const controls2 = useAnimation();
 
-  const slides = [
-    { id: 1, component: <Hero1 controls={hero1Controls} /> },
-    { id: 2, component: <Hero2 controls={hero2Controls} /> }
-  ];
+  const slides = [<Hero1 controls={controls1} />, <Hero2 controls={controls2} />];
 
-  const ANIMATION_DELAY = 1500; // ms — wait for animation to finish
-  const AUTOPLAY_DELAY = 1000; // extra pause before next slide
-
-  const playNextSlide = async () => {
-    if (!swiperRef.current) return;
-
-    const swiper = swiperRef.current;
-    const currentIndex = swiper.realIndex;
-
-    // Animate current slide
-    if (currentIndex === 0) {
-      await hero1Controls.start("visible");
-      hero2Controls.set("hidden");
-    } else {
-      await hero2Controls.start("visible");
-      hero1Controls.set("hidden");
-    }
-
-    // Wait for a bit after animation
-    setTimeout(() => {
-      swiper.slideNext();
-    }, AUTOPLAY_DELAY);
-  };
-
+  // auto-slide every 10s
   useEffect(() => {
-    if (!swiperRef.current) return;
-
     const interval = setInterval(() => {
-      playNextSlide();
-    }, ANIMATION_DELAY + AUTOPLAY_DELAY);
-
+      setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
+  // control animation visibility
+  useEffect(() => {
+    if (currentSlide === 0) {
+      controls1.start("visible");
+      controls2.start("hidden");
+    } else {
+      controls1.start("hidden");
+      controls2.start("visible");
+    }
+  }, [currentSlide]);
+
+  // manual navigation (for arrows)
+  const handlePrev = () => setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+  const handleNext = () => setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+
   return (
-    <Swiper
-      modules={[Navigation, Pagination, EffectFade]}
-      navigation
-      pagination={{ clickable: true }}
-      effect="fade"
-      fadeEffect={{ crossFade: true }}
-      loop={true}
-      onSwiper={(swiper) => {
-        swiperRef.current = swiper;
-        playNextSlide(); // animate first slide immediately
-      }}
-      onSlideChange={(swiper) => {
-        // optional: re-animate manually if user clicks arrows/dots
-        playNextSlide();
-      }}
-    >
-      {slides.map(slide => (
-        <SwiperSlide key={slide.id}>{slide.component}</SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="relative w-full h-[400px] overflow-hidden">
+      {slides[currentSlide]}
+
+      {/* arrows */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-5 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-black p-2 rounded-full"
+      >
+        <FaArrowCircleLeft size={28} /> 
+      </button>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-5 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-black p-2 rounded-full"
+      >
+        <FaArrowCircleRight size={28} />
+      </button>
+
+      {/* dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3">
+        {[0, 1].map((index) => (
+          <div
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
+              currentSlide === index ? "bg-black scale-125" : "bg-gray-400"
+            }`}
+          ></div>
+        ))}
+      </div>
+    </div>
   );
 }
-
-
-
-/*className="
-    [&_.swiper-button-prev]:!bg-white [&_.swiper-button-prev]:!rounded-full [&_.swiper-button-prev]:!text-black [&_.swiper-button-prev]:!p-3 
-    [&_.swiper-button-prev:hover]:!bg-[#FA4F26] [&_.swiper-button-prev:hover]:!text-white
-    [&_.swiper-button-next]:!bg-white [&_.swiper-button-next]:!rounded-full  [&_.swiper-button-next]:!text-black [&_.swiper-button-next]:!p-3 
-    [&_.swiper-button-next:hover]:!bg-[#FA4F26] [&_.swiper-button-next:hover]:!text-white
-    // pagination dots
-    [&_.swiper-pagination-bullet]:!bg-gray-500 [&_.swiper-pagination-bullet-active]:!bg-[#FA4F26]"
-    >
-
-// import React from 'react'
-
-// import { Swiper, SwiperSlide } from "swiper/react";
-// // Swiper is the main container component (the carousel itself).
-// // SwiperSlide is a wrapper for each slide. You put your slide content inside SwiperSlide.
-
-// import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
-// /*These are modules you enable to add functionality:
-// Navigation → left/right arrow controls.
-// Pagination → dots/indicators.
-// Autoplay → automatic slide rotation.
-// EffectFade → fade transition between slides instead of sliding horizontally. */
-
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/effect-fade";
-// //Swiper ships with its own CSS. These imports add the default styles for core,
-// //navigation arrows, pagination dots, and the fade effect. If you skip them the layout/controls will look broken.
-
-// //hero slides
-// import Hero1 from './Hero1'
-// import Hero2 from './Hero2'
-
-// //react icons if i dont want to give styling to navigation buttons
-// import { MdKeyboardArrowLeft } from "react-icons/md";
-// import { MdKeyboardArrowRight } from "react-icons/md";
-
-
-// //do this if u have many slides
-// export default function HeroSection() {
-//   const slides = [
-//     {id:1, component:<Hero1 />},
-//     {id:2, component:<Hero2 />}
-//   ]
-//   return (
-//     <div>
-
-// {/* side arrow buttons - CUSTOM BUILT */}
-//     {/* <div className='custom-prev absolute top-2/3 left-0 z-20 bg-white rounded-full hover:bg-[#FA4F26] cursor-pointer hover:text-white shadow-xl/30'>
-//     <MdKeyboardArrowLeft  className='size-10' />
-//     </div>
-//      <div className='custom-next absolute top-2/3 right-0 z-20 bg-white rounded-full hover:bg-[#FA4F26] cursor-pointer hover:text-white shadow-xl/30'>
-//     <MdKeyboardArrowRight  className='size-10' />
-//     </div> */}
-
-//     <Swiper
-//     modules={[Navigation, Pagination, Autoplay, EffectFade]} 
-// //Here we tell Swiper which modules to enable. Without this line, navigation/pagination/autoplay/effect won’t work.
-   
-//   navigation simple
-//   //but with react icons we do like below
-//   // navigation= {{
-//   //   prevEl:".custom-prev",
-//   //   nextEl:".custom-next"
-//   // }}
-//   //Enables navigation arrows. Swiper will render default arrows (you can style or replace them later).
-
-//     pagination={{clickable:true}}
-//     //Enables pagination dots. clickable: true means clicking a dot jumps to that slide.
-
-//     effect="fade"
-//     fadeEffect={{crossFade:true}}
-//     //effect="fade" uses the fade transition instead of the default slide transition.
-//     // fadeEffect.crossFade = true gives a smoother overlap fade.
-
-//     autoplay={{delay:4000 ,disableOnInteraction: false, pauseOnMouseEnter:false}}
-//    /* delay: 10000 → 5000 ms (5 seconds) between auto slides 
-//     disableOnInteraction: false → user interactions (click/drag) won’t stop autoplay permanently. It keeps auto-rotating after manual interaction.
-//     pauseOnMouseEnter: true -> to pause on hover in newer Swiper builds. */
-    
-
-//     loop={true}
-
-//     // styling arrow buttons
-//     className="
-//     [&_.swiper-button-prev]:!bg-white [&_.swiper-button-prev]:!rounded-full [&_.swiper-button-prev]:!text-black [&_.swiper-button-prev]:!p-3 
-//     [&_.swiper-button-prev:hover]:!bg-[#FA4F26] [&_.swiper-button-prev:hover]:!text-white
-
-//     [&_.swiper-button-next]:!bg-white [&_.swiper-button-next]:!rounded-full  [&_.swiper-button-next]:!text-black [&_.swiper-button-next]:!p-3 
-//     [&_.swiper-button-next:hover]:!bg-[#FA4F26] [&_.swiper-button-next:hover]:!text-white
-
-//     // pagination dots
-//     [&_.swiper-pagination-bullet]:!bg-gray-500 [&_.swiper-pagination-bullet-active]:!bg-[#FA4F26]"
-//     >
-// {/* we can do this simply but when we have many we can use, .map */}
-// {/* <SwiperSlide> <Hero1 /> </SwiperSlide>
-// <SwiperSlide> <Hero2 /> </SwiperSlide> */}
-
-// {/* USING .MAP */}
-// {
-//   slides.map( (slide)=> (
-//     <SwiperSlide key={slide.id}> {slide.component} </SwiperSlide>
-//   ))
-// }
-// {/* We map over the slides array and put each component inside a SwiperSlide. */}
-//     </Swiper>
-      
-//     </div>
-//   )
-// }
-
-

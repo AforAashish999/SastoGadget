@@ -1,12 +1,12 @@
 import React from 'react'
 import Header1 from './Header1'
-import CategoryMenu from './CategoryMenu'
+import Header2 from './Header2'
 
 export default function Header() {
   return (
     <div >
         <Header1   />
-        <CategoryMenu />
+        <Header2 />
     </div>
   )
 }

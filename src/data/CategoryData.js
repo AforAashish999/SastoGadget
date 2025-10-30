@@ -1,11 +1,11 @@
-const categories = [
+export const categories = [
     //A => ELECTRONIC
     {
         id: "electronic-devices",
         name: "ELECTRONIC DEVICES",
         subcategories: [
             {
-                id:"powerbanks-batteris",
+                id:"powerbanks-batteries",
                 name: "POWERBANKS AND BATTERIES" ,
                 items: [
                     {id: "powerbanks", name: "POWERBANKS"},
@@ -44,16 +44,15 @@ const categories = [
         id: "mobile-more",
         name: "MOBILE & MORE",
         subcategories: [
-            //1
             {
                 id: "smart-watch", name: "SMARTWATCH"
-            }, //2
+            },
             {
                 id: "stylus-pen", name: "STYLUS PENS"
-            }, //3
+            }, 
             {
                 id: "mobile-phones", name: "MOBILE PHONES"
-            }, //4
+            }, 
             {
                 id: "mobile-coolers", name: "MOBILE COOLERS"
             }
@@ -135,13 +134,3 @@ const categories = [
   
    
 ]
-
-//   subcategories: [
-//             id:"powerbanks-batteris",
-//              name: "POWERBANKS AND BATTERIES" ,
-//              items: [
-//                     {id: "powerbanks", name: "POWERBANKS"},
-//                     {id: "batteries-more", name: "BATTERIES & MORE" }
-//              ]
-//                 ]     
-        

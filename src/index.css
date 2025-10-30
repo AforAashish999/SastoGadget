@@ -1,2 +1,11 @@
 @import "tailwindcss";
 
+/* multi-line ellipsis that can cut mid-word */
+.clamp-2-midword {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all; /* allows mid-word cuts */
+  -webkit-line-clamp: 2; /* vendor-prefixed property */
+}

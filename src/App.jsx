@@ -8,6 +8,12 @@ import Account from "./Pages/Account";
 import { ToastContainer } from "react-toastify";
 import LostPw from "./Pages/LostPw";
 import ResetPw from "./Pages/ResetPw";
+import ProductCategory from "./Pages/ProductCategory";
+import ProductDetails from "./Pages/ProductDetails";
+import ViewCart from "./Pages/ViewCart";
+import CheckOut from "./Pages/CheckOut";
+import Payment from "./Pages/Payment";
+import SearchPage from "./Pages/SearchPage";
 
 function App() {
   return (
@@ -25,13 +31,22 @@ function App() {
         // toastClassName="!bg-gradient-to-r from-red-700 via-red-600 to-slate-700 !text-white  !rounded-xl !font-bold custom-successToast"
         // bodyClassName="!font-semibold"
       />
-      
+        
       <Routes>
         <Route path="/" element={<MainLayout />}>
          <Route index element={<Home />} />
          <Route path="/account" element={<Account />} />
          <Route path="/lostpw" element={<LostPw /> } />
          <Route path="/resetpw" element = {<ResetPw />} />
+         <Route path="/product-category/:id/:subId?/:itemId?" element = {<ProductCategory />} />
+
+          <Route path="/product/:id" element = {<ProductDetails />} />
+
+          <Route path="/viewcart" element={<ViewCart /> } />
+          <Route path="/checkout" element={<CheckOut /> } />
+          <Route path="/payment" element ={<Payment /> } />
+
+          <Route path="/search" element={<SearchPage /> } />
         </Route>
        
       </Routes>

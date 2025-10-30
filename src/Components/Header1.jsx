@@ -140,9 +140,11 @@ import Logo from '../assets/Logo.png'
 import { FaSearch } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { PiShoppingCart } from "react-icons/pi";
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Cart from './Cart';
+import { useNavigate } from 'react-router-dom';
 
 //redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -158,6 +160,17 @@ export default function Header1() {
   //extract username from email
   const displayName = userIdentifier ? userIdentifier.split("@")[0] : null;
 
+  const navigate = useNavigate();
+  const [query, setQuery] = useState(""); // 🔹 local state for search input
+   // 🔹 handle search submit
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      setQuery(""); // optional: clear input after navigating
+    }
+  };
+
 
   return (
     < >
@@ -170,19 +183,22 @@ export default function Header1() {
         </Link>
 
 
-        <div className=' relative w-1/3 ' >
+        {/* 🔹 wrapped input & button in a form */}
+        <form onSubmit={handleSearch} className='relative w-1/3'>
           <input
             type="text"
+            value={query}                    // 🔹 controlled input
+            onChange={(e) => setQuery(e.target.value)}
             placeholder='Enter the product name'
-            className='w-full h-10 pl-4 pr-12 rounded-md border-gray-300 border bg-white'
-
+            className='w-full h-10 pl-4 pr-12 rounded-md border-gray-300 border bg-white outline-0'
           />
 
-          <button className='absolute right-0 top-0 h-full px-4 bg-[#FA4F26] text-white  rounded-r-md cursor-pointer ' >
+          <button
+            type="submit"                    // 🔹 triggers form submit
+            className='absolute right-0 top-0 h-full px-4 bg-[#FA4F26] text-white rounded-r-md cursor-pointer'>
             <FaSearch />
           </button>
-
-        </div>
+        </form>
 
         <Link
           to="/account"
@@ -198,9 +214,10 @@ export default function Header1() {
           </div>
         </Link>
 
-        <button>
+        {/* <button>
           <PiShoppingCart className='h-9 w-9 text-white  ' />
-        </button>
+        </button> */}
+        <Cart />
 
         {/* LogOut Button */}
         {userIdentifier && (
