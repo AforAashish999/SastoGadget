@@ -5,24 +5,24 @@ import hero2Earbud2 from "./hero2Earbud2.png";
 import hero2Earbud3 from "./hero2Earbud3.png";
 
 //powerbanks
-import p1 from "./PowerBanks/p1.webp"
-import p2 from "./PowerBanks/p2.webp"
-import p3 from "./PowerBanks/p3.webp"
-import p4 from "./PowerBanks/p4.webp"
-import p5 from "./PowerBanks/p5.webp"
+import p1 from "./powerbanks/p1.webp"
+import p2 from "./powerbanks/p2.webp"
+import p3 from "./powerbanks/p3.webp"
+import p4 from "./powerbanks/p4.webp"
+import p5 from "./powerbanks/p5.webp"
 
 
 //QR
-import nabil from "./QR/nabil.jpg"
-import esewa from "./QR/esewa.jpg"
+import nabil from "./qr/nabil.jpg"
+import esewa from "./qr/esewa.jpg"
 
 //exercise equipments
-import exr1 from "./ExerciseEquipments/exr1.jpg"
-import exr2 from "./ExerciseEquipments/exr2.jpg"
-import exr3 from "./ExerciseEquipments/exr3.jpg"
-import exr4 from "./ExerciseEquipments/exr4.jpg"
-import exr5 from "./ExerciseEquipments/exr5.jpg"
-import exr6 from "./ExerciseEquipments/exr6.jpg"
+import exr1 from "./exerciseequipments/exr1.jpg"
+import exr2 from "./exerciseequipments/exr2.jpg"
+import exr3 from "./exerciseequipments/exr3.jpg"
+import exr4 from "./exerciseequipments/exr4.jpg"
+import exr5 from "./exerciseequipments/exr5.jpg"
+import exr6 from "./exerciseequipments/exr6.jpg"
 
 
 export { Logo };
